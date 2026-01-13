@@ -1,0 +1,119 @@
+Building configuration...
+
+Current configuration : 1528 bytes
+!
+! Last configuration change at 15:50:19 UTC Tue Jan 6 2026 by admin
+!
+version 15.4
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R2_Client
+!
+boot-start-marker
+boot-end-marker
+!
+!
+enable password cisco
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+no ip domain lookup
+ip domain name atec.pt
+ip cef
+no ipv6 cef
+multilink bundle-name authenticated
+!
+!
+cts logging verbose
+!
+!
+license udi pid CISCO2901/K9 sn FCZ1550C3V8
+!
+!
+username admin privilege 15 password 0 cisco
+!
+redundancy
+!
+!
+!
+!
+!
+!
+interface Embedded-Service-Engine0/0
+ no ip address
+ shutdown
+!
+interface GigabitEthernet0/0
+ description Link to LAN2
+ ip address 192.168.1.254 255.255.255.0
+ no shutdown
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/1
+ description Link to WAN
+ ip address 1.0.0.2 255.255.255.248
+ no shutdown
+ duplex auto
+ speed auto
+!
+interface Serial0/0/0
+ no ip address
+ shutdown
+ clock rate 2000000
+!
+interface Serial0/0/1
+ no ip address
+ shutdown
+ clock rate 2000000
+!
+ip forward-protocol nd
+!
+no ip http server
+no ip http secure-server
+!
+ip route 192.168.0.0 255.255.255.0 1.0.0.1
+ip route 192.168.2.0 255.255.255.0 1.0.0.3
+!
+!
+!
+!
+control-plane
+!
+!
+!
+line con 0
+ password cisco
+ logging synchronous
+ login
+line aux 0
+line 2
+ no activation-character
+ no exec
+ transport preferred none
+ transport output pad telnet rlogin lapb-ta mop udptn v120 ssh
+ stopbits 1
+line vty 0 4
+ password cisco
+ logging synchronous
+ login local
+ transport input ssh
+!
+scheduler allocate 20000 1000
+!
+end
